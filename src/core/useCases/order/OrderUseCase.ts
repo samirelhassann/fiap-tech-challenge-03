@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 
-import { env } from "config/env";
-
+import { env } from "@/config/env";
 import { UniqueEntityId } from "@/core/domain/base/entities/UniqueEntityId";
 import { UnsupportedArgumentValueError } from "@/core/domain/base/errors/entities/UnsupportedArgumentValueError";
 import { MinimumResourcesNotReached } from "@/core/domain/base/errors/useCases/MinimumResourcesNotReached";

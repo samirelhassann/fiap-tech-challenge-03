@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
-import { env } from "../../config/env";
+import { env } from "@/config/env";
+
 import { app } from "./app";
 
 app

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { env } from "config/env";
-
+import { env } from "@/config/env";
 import { Order } from "@/core/domain/entities/Order";
 import { IPaymentService } from "@/core/interfaces/services/IPaymentService";
 

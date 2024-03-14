@@ -1,5 +1,4 @@
-import { env } from "config/env";
-
+import { env } from "@/config/env";
 import { Order } from "@/core/domain/entities/Order";
 
 import { CreatePaymentRequest, Item } from "../model/CreatePaymentRequest";

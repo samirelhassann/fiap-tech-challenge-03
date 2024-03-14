@@ -2,9 +2,10 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-console */
 
-import { env } from "config/env";
 import { FastifyInstance } from "fastify";
 import { ZodError } from "zod";
+
+import { env } from "@/config/env";
 
 export function errorHandling(app: FastifyInstance) {
   app.setErrorHandler((error, _request, reply) => {
