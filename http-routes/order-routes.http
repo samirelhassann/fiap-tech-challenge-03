@@ -1,0 +1,59 @@
+@host = http://localhost:3333
+# @host = http://localhost:31100
+
+# @name get-orders
+GET {{host}}/orders
+
+###
+
+# @name get-orders-queue
+GET {{host}}/orders/queue
+
+###
+
+# @name get-order-by-id 
+GET {{host}}/orders/1676f8da-6649-47c3-bab7-30a34477de7c
+
+### 
+
+# @name create-order
+POST {{host}}/orders  
+content-type: application/json
+
+{
+  "clientId": "6a282d4d-1994-4e04-9b7e-1a7bd346e756",
+  "paymentMethod": "QR_CODE",
+  "paymentStatus": "PENDING_PAYMENT",
+  "combos": [
+    {
+      "sandwichId": "ac07ea2e-3f7d-4699-81a2-3445ca535b99",
+      "drinkId": "b8c6ab0e-2dc6-4a37-860d-538ce0e957d2",
+      "sideId": "bca08c8e-e9cc-4e8f-9c59-590514658809",
+      "quantity": 2,
+      "annotation": "remove the tomatos"
+    }
+  ]
+}
+
+### 
+
+
+# @name update-order-status
+PATCH {{host}}/orders/c46f18c7-5296-4be8-aa43-95ea1c8df925
+content-type: application/json
+
+{
+  "status": "IN_PREPARATION"
+}
+### 
+
+# @name webhook
+POST {{host}}/orders/webhook
+content-type: application/json
+
+{
+  "resource": "https://api.mercadolibre.com/merchant_orders/15308297344",
+  "topic": "merchant_order"
+}
+
+
