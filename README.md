@@ -3,7 +3,8 @@
 - Refac the code to instance the use cases on controller layer
 - Implement API Gateway and a function serverless to authenticate the client based on `taxvat`
   - Microsoft AD & Azure Functions
-- Implement the 
+- Implement the
+- 
 
 
 # Fast Food API
