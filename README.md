@@ -38,7 +38,7 @@ Follow these steps to install the project:
 
 1. Clone the project
 ```bash
-git clone https://github.com/samirelhassann/fiap-tech-challenge-03.git
+git clone https://github.com/samirelhassann/fiap-tech-challenge-03-application.git
 ```
 
 2. Navigate into the project directory:
