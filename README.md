@@ -5,7 +5,7 @@
   - Microsoft AD & Azure Functions
 - Implement the
 - 
-
+s
 
 # Fast Food API
 
