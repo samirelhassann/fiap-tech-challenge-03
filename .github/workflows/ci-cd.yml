@@ -125,14 +125,22 @@ jobs:
           AKS_CLUSTER_NAME: ${{ secrets.AKS_CLUSTER_NAME }}
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
         shell: bash
-      - name: Create ConfigMap
-        run: |
-          kubectl create configmap api-config --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" --from-literal=MERCADO_PAGO_GENERATE_PAYMENT="${{ secrets.MERCADO_PAGO_GENERATE_PAYMENT }}" --from-literal=MERCADO_PAGO_WEBHOOK_URL="${{ secrets.MERCADO_PAGO_WEBHOOK_URL }}" --from-literal=MERCADO_PAGO_API_HOST="${{ secrets.MERCADO_PAGO_API_HOST }}" --from-literal=MERCADO_PAGO_BEARER_TOKEN="${{ secrets.MERCADO_PAGO_BEARER_TOKEN }}" --from-literal=MERCADO_PAGO_USER_ID="${{ secrets.MERCADO_PAGO_USER_ID }}" --from-literal=MERCADO_PAGO_EXTERNAL_POS_ID="${{ secrets.MERCADO_PAGO_EXTERNAL_POS_ID }}" --dry-run=client -o yaml | kubectl apply -f - --validate=false
       - name: Update Deployment Image
         run: |
           VERSION_TAG=$(git rev-parse --short HEAD)
           IMAGE_NAME="${{ secrets.IMAGE_NAME }}:$VERSION_TAG"
           sed -i "s|IMAGE_PLACEHOLDER|$IMAGE_NAME|g" ./deploy/deployment-api.yaml
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+      - name: Configure ConfigMap
+        run: |
+          sed -i 's|POSTGRES_URL: ""|POSTGRES_URL: "${{ secrets.POSTGRES_URL }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_GENERATE_PAYMENT: ""|MERCADO_PAGO_GENERATE_PAYMENT: "${{ secrets.MERCADO_PAGO_GENERATE_PAYMENT }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_WEBHOOK_URL: ""|MERCADO_PAGO_WEBHOOK_URL: "${{ secrets.MERCADO_PAGO_WEBHOOK_URL }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_API_HOST: ""|MERCADO_PAGO_API_HOST: "${{ secrets.MERCADO_PAGO_API_HOST }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_BEARER_TOKEN: ""|MERCADO_PAGO_BEARER_TOKEN: "${{ secrets.MERCADO_PAGO_BEARER_TOKEN }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_USER_ID: ""|MERCADO_PAGO_USER_ID: "${{ secrets.MERCADO_PAGO_USER_ID }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|MERCADO_PAGO_EXTERNAL_POS_ID: ""|MERCADO_PAGO_EXTERNAL_POS_ID: "${{ secrets.MERCADO_PAGO_EXTERNAL_POS_ID }}"|' ./deploy/configmap-api.yaml
         env:
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
       - name: Deploy to Kubernetes
