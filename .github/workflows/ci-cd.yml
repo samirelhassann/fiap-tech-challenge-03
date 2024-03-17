@@ -96,7 +96,7 @@ jobs:
         run: |
           az aks get-credentials --resource-group ${{ env.RESOURCE_GROUP_NAME }} --name ${{ env.   AKS_CLUSTER_NAME }} --overwrite-existing --file ${{ github.workspace }}/kubeconfig
         env:
-          AKS_RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_NAME }}
+          RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
           AKS_CLUSTER_NAME: ${{ secrets.AKS_CLUSTER_NAME }}
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
         shell: bash
