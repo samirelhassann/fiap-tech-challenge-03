@@ -84,7 +84,7 @@ jobs:
   check-deploy-folder:
     name: 📁 Check Deploy Folder
     if: github.event_name == 'pull_request' && github.event.push.paths == 'deploy/**'
-    needs: run-unit-tests
+    needs: update-image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
