@@ -83,7 +83,7 @@ jobs:
 
   check-deploy-folder:
     name: 📁 Check Deploy Folder
-    if: github.event_name == 'pull_request' && github.event.push.paths == 'deploy/**'
+    if: github.event_name == 'pull_request' && (contains(github.event.head_commit.modified, 'deploy/') || contains(github.event.head_commit.added, 'deploy/'))
     needs: sonarcloud-analysis
     runs-on: ubuntu-latest
     steps:
