@@ -5,5 +5,3 @@ node_modules
 
 coverage
 .scannerwork
-
-deploy/configmap-api.yaml
