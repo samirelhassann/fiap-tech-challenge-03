@@ -127,7 +127,7 @@ jobs:
         shell: bash
       - name: Create ConfigMap
         run: |
-          kubectl create configmap api-config --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" --from-literal=MERCADO_PAGO_GENERATE_PAYMENT={{ secrets.MERCADO_PAGO_GENERATE_PAYMENT }}" --from-literal=MERCADO_PAGO_WEBHOOK_URL="${{ secrets.MERCADO_PAGO_WEBHOOK_URL }}" --from-literal=MERCADO_PAGO_API_HOST="${{ secrets.MERCADO_PAGO_API_HOST }}" --from-literal=MERCADO_PAGO_BEARER_TOKEN="${{ secrets.MERCADO_PAGO_BEARER_TOKEN }}" --from-literal=MERCADO_PAGO_USER_ID="${{ secrets.MERCADO_PAGO_USER_ID }}" --from-literal=MERCADO_PAGO_EXTERNAL_POS_ID="${{ secrets.MERCADO_PAGO_EXTERNAL_POS_ID }}" --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create configmap api-config --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" --from-literal=MERCADO_PAGO_GENERATE_PAYMENT="${{ secrets.MERCADO_PAGO_GENERATE_PAYMENT }}" --from-literal=MERCADO_PAGO_WEBHOOK_URL="${{ secrets.MERCADO_PAGO_WEBHOOK_URL }}" --from-literal=MERCADO_PAGO_API_HOST="${{ secrets.MERCADO_PAGO_API_HOST }}" --from-literal=MERCADO_PAGO_BEARER_TOKEN="${{ secrets.MERCADO_PAGO_BEARER_TOKEN }}" --from-literal=MERCADO_PAGO_USER_ID="${{ secrets.MERCADO_PAGO_USER_ID }}" --from-literal=MERCADO_PAGO_EXTERNAL_POS_ID="${{ secrets.MERCADO_PAGO_EXTERNAL_POS_ID }}" --dry-run=client -o yaml | kubectl apply -f -
       - name: Update Deployment Image
         run: |
           VERSION_TAG=$(git rev-parse --short HEAD)
