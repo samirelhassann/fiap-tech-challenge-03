@@ -7,6 +7,7 @@
 - 
 s
 
+
 # Fast Food API
 
 Repository ofTech Challenge #02, in the [System Architecture Pós-Tech FIAP course](https://postech.fiap.com.br/). Clean Architecture techniques were used, creating the necessary files to run the application in the Kubernetes environment and creating continuous integration with Github Actions + Dockerhub + AWS.
