@@ -84,7 +84,7 @@ jobs:
   check-deploy-folder:
     name: 📁 Check Deploy Folder
     if: github.event_name == 'pull_request' && github.event.push.paths == 'deploy/**'
-    needs: update-image
+    needs: sonarcloud-analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
