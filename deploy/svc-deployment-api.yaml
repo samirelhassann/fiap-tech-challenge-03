@@ -4,10 +4,12 @@ metadata:
   labels:
     app: deployment-api
   name: svc-api
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector: 
     app: deployment-api
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 80
       protocol: TCP
