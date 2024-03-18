@@ -4,10 +4,8 @@ metadata:
   labels:
     app: deployment-api
   name: svc-api
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
-  selector: 
+  selector:
     app: deployment-api
   type: LoadBalancer
   ports:
