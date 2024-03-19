@@ -1,6 +1,8 @@
 
 @host = http://localhost:3333
-# @host = http://localhost:31100
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiI0MmUyYTJjMi01ZTk2LTQxMGMtOWNhOS00ZDAyYzVjZGFmNTYiLCJpYXQiOjE3MTA4NzQyMjYsImV4cCI6MTcxMDk2MDYyNn0.oUY4OFZfJlu_CJFZprAvLRQqwtRmCOWL_o_vJnqQv8s
+
+@tokenClient = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwic3ViIjoiZTlmZDhhZjItZGQzYi00ZDUwLThjODMtMDIxZjhlMGQ3OTkzIiwiaWF0IjoxNzEwODczNzU0LCJleHAiOjE3MTA5NjAxNTR9.OhV2LF6jr8J9Hpyd93ZFcJCCNvYdAqRF6xnODU4GNlo
 
 # @name get-products
 GET {{host}}/products
@@ -15,6 +17,7 @@ GET {{host}}/products/0c3c1658-c9e5-42a0-b87b-3d9a7dfe07ac
 # @name create-product
 POST {{host}}/products
 content-type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "name": "Batata Rustica",

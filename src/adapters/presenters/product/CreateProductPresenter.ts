@@ -30,7 +30,7 @@ export class CreateProductPresenter
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     _useCaseResponseModel: CreateProductUseCaseResponseDTO
   ) {

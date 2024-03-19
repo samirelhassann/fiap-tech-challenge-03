@@ -6,38 +6,38 @@ import { OrderStatusEnum } from "@/core/domain/enums/OrderStatusEnum";
 import { PaymentMethodEnum } from "@/core/domain/enums/PaymentMethodEnum";
 import { OrderStatus } from "@/core/domain/valueObjects/OrderStatus";
 import { PaymentMethod } from "@/core/domain/valueObjects/PaymentMethod";
-import { Client as PrismaClient, Order as PrismaOrder } from "@prisma/client";
+import { User as PrismaUser, Order as PrismaOrder } from "@prisma/client";
 
-import { PrismaClientToDomainConverter } from "./PrismaClientToDomainConverter";
+import { PrismaUserToDomainConverter } from "./PrismaUserToDomainConverter";
 
 export class PrismaOrderToDomainConverter {
   static convert(
-    prismaClient: PrismaOrder & { client?: PrismaClient | null },
+    prismaUser: PrismaOrder & { user?: PrismaUser | null },
     combos?: OrderComboItem[]
   ): Order {
     return new Order(
       {
-        number: prismaClient.number ? BigInt(prismaClient.number) : undefined,
+        number: prismaUser.number ? BigInt(prismaUser.number) : undefined,
         status: new OrderStatus({
-          name: prismaClient.status as OrderStatusEnum,
+          name: prismaUser.status as OrderStatusEnum,
         }),
-        clientId: prismaClient.client_id
-          ? new UniqueEntityId(prismaClient.client_id)
+        userId: prismaUser.user_id
+          ? new UniqueEntityId(prismaUser.user_id)
           : undefined,
-        visitorName: prismaClient.visitor_name ?? undefined,
+        visitorName: prismaUser.visitor_name ?? undefined,
         paymentMethod: new PaymentMethod({
-          name: prismaClient.payment_method as PaymentMethodEnum,
+          name: prismaUser.payment_method as PaymentMethodEnum,
         }),
-        paymentDetails: prismaClient.payment_details ?? undefined,
-        totalPrice: prismaClient.total_price.toNumber(),
-        createdAt: prismaClient.created_at,
-        updatedAt: prismaClient.updated_at ?? undefined,
-        client: prismaClient.client
-          ? PrismaClientToDomainConverter.convert(prismaClient.client)
+        paymentDetails: prismaUser.payment_details ?? undefined,
+        totalPrice: prismaUser.total_price.toNumber(),
+        createdAt: prismaUser.created_at,
+        updatedAt: prismaUser.updated_at ?? undefined,
+        user: prismaUser.user
+          ? PrismaUserToDomainConverter.convert(prismaUser.user)
           : undefined,
         combos: new OrderComboItemList(combos),
       },
-      new UniqueEntityId(prismaClient.id)
+      new UniqueEntityId(prismaUser.id)
     );
   }
 }

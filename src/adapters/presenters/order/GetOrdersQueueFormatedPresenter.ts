@@ -40,11 +40,11 @@ export class GetOrdersQueueFormatedPresenter
     return model.paginationResponse.toResponse((order) => ({
       number: order.number.toString(),
       status: order.status.name,
-      clientName: order.client?.name ?? order.visitorName!,
+      clientName: order.user?.name ?? order.visitorName!,
     }));
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     response: GetOrdersQueueFormatedUseCaseResponseDTO
   ) {

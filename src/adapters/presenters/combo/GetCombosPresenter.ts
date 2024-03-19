@@ -41,7 +41,7 @@ export class GetCombosPresenter
     }));
   }
 
-  sendResponse(res: FastifyReply, response: GetCombosUseCaseResponseDTO) {
+  async sendResponse(res: FastifyReply, response: GetCombosUseCaseResponseDTO) {
     return res.status(200).send(this.convertToViewModel(response));
   }
 }

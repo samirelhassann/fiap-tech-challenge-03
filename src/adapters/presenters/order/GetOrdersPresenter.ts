@@ -38,7 +38,7 @@ export class GetOrdersPresenter
       id: order.id.toString(),
       number: order.number.toString(),
       status: order.status.name,
-      clientId: order.clientId?.toString(),
+      clientId: order.userId?.toString(),
       visitorName: order.visitorName,
       paymentMethod: order.paymentMethod.name,
       paymentDetails: order.paymentDetails,
@@ -48,7 +48,7 @@ export class GetOrdersPresenter
     }));
   }
 
-  sendResponse(res: FastifyReply, response: GetOrdersUseCaseResponseDTO) {
+  async sendResponse(res: FastifyReply, response: GetOrdersUseCaseResponseDTO) {
     return res.status(200).send(this.convertToViewModel(response));
   }
 }

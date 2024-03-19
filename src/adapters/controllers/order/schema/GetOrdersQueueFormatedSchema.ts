@@ -15,7 +15,7 @@ const responseExample: GetOrdersQueueFormatedViewModel = {
     {
       number: "1",
       status: "pending",
-      clientName: "123",
+      userName: "123",
     },
   ],
   pagination: {

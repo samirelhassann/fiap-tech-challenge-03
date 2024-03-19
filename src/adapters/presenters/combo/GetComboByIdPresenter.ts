@@ -49,7 +49,7 @@ export class GetComboByIdPresenter
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     useCaseResponseModel: GetComboByIdUseCaseResponseDTO
   ) {

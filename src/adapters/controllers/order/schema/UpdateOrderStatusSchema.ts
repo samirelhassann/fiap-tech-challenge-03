@@ -18,7 +18,7 @@ export const updateOrderStatusPayloadSchema = z.object({
 const responseExample: UpdateOrderStatusViewModel = {
   id: "123",
   status: "pending",
-  clientId: "123",
+  userId: "123",
   visitorName: "John Doe",
   paymentMethod: "QR_CODE",
   totalPrice: 100,

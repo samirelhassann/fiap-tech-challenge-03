@@ -1,7 +1,7 @@
 import { Order } from "@/core/domain/entities/Order";
 
 export interface CreateOrderUseCaseRequestDTO {
-  clientId?: string;
+  userId?: string;
   visitorName?: string;
   paymentMethod: string;
   paymentDetails?: string;

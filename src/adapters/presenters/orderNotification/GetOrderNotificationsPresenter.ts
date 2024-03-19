@@ -38,7 +38,7 @@ export class GetOrderNotificationsPresenter
     return model.paginationResponse.toResponse((orderNotification) => ({
       id: orderNotification.id.toString(),
       orderId: orderNotification.orderId.toString(),
-      clientId: orderNotification.clientId.toString(),
+      clientId: orderNotification.userId.toString(),
       status: orderNotification.status.name,
       message: orderNotification.message,
       createdAt: orderNotification.createdAt.toISOString(),
@@ -46,7 +46,7 @@ export class GetOrderNotificationsPresenter
     }));
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     response: GetOrderNotificationsUseCaseResponseDTO
   ) {

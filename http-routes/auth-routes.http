@@ -1,0 +1,28 @@
+@host = http://localhost:3333
+# @host = http://localhost:31100
+
+# @name register
+POST {{host}}/register
+content-type: application/json
+
+{
+    "email": "john.doe322@gmail.com",
+    "name": "John Doe",
+    "taxVat": "12312232122",
+    "password": "john.123",
+    "role": "ADMIN"
+}
+
+### 
+
+# @name auth
+POST {{host}}/auth
+content-type: application/json
+
+{
+    "email": "john.doe322@gmail.com",
+    "password": "john.123"
+}
+
+### 
+

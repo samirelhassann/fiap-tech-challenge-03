@@ -29,7 +29,7 @@ export class OrderWebHookPresenter
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-  sendResponse(res: FastifyReply) {
+  async sendResponse(res: FastifyReply) {
     return res.status(200).send();
   }
 }

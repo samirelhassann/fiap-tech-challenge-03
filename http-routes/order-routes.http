@@ -1,6 +1,8 @@
 @host = http://localhost:3333
 # @host = http://localhost:31100
 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwic3ViIjoiZTlmZDhhZjItZGQzYi00ZDUwLThjODMtMDIxZjhlMGQ3OTkzIiwiaWF0IjoxNzEwODYyMzcwLCJleHAiOjE3MTA5NDg3NzB9.B8KdObtHjMTapDpGZRhOBjt6f-Igwu_9_MxqMk6wmRs
+
 # @name get-orders
 GET {{host}}/orders
 
@@ -19,16 +21,16 @@ GET {{host}}/orders/1676f8da-6649-47c3-bab7-30a34477de7c
 # @name create-order
 POST {{host}}/orders  
 content-type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "clientId": "6a282d4d-1994-4e04-9b7e-1a7bd346e756",
   "paymentMethod": "QR_CODE",
   "paymentStatus": "PENDING_PAYMENT",
   "combos": [
     {
-      "sandwichId": "ac07ea2e-3f7d-4699-81a2-3445ca535b99",
-      "drinkId": "b8c6ab0e-2dc6-4a37-860d-538ce0e957d2",
-      "sideId": "bca08c8e-e9cc-4e8f-9c59-590514658809",
+      "sandwichId": "062b0bb6-6a60-434b-a54f-5bfb109795d6",
+      "drinkId": "16db4236-0b8f-4fb1-a020-1220a04f02f7",
+      "sideId": "88e2ac98-2cd1-40b3-81d1-aaeec76ea807",
       "quantity": 2,
       "annotation": "remove the tomatos"
     }
@@ -39,12 +41,13 @@ content-type: application/json
 
 
 # @name update-order-status
-PATCH {{host}}/orders/c46f18c7-5296-4be8-aa43-95ea1c8df925
+PATCH {{host}}/orders/8c292d19-887d-4eb0-b987-d7f8b920d16a
 content-type: application/json
 
 {
-  "status": "IN_PREPARATION"
+  "status": "READY"
 }
+
 ### 
 
 # @name webhook

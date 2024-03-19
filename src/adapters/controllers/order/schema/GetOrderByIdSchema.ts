@@ -13,7 +13,7 @@ export const getOrderByIdPathParamsSchema = z.object({
 const responseExample: GetOrderByIdViewModel = {
   id: "1",
   number: "1",
-  clientId: "1",
+  userId: "1",
   status: "pending",
   totalPrice: 10,
   paymentMethod: "QR_CODE",

@@ -1,0 +1,24 @@
+@host = http://localhost:3333
+# @host = http://localhost:31100
+
+
+# @name get-users
+GET {{host}}/users
+
+###
+
+# @name get-user-by-id
+GET {{host}}/users/dce1cf4a-aa2a-4b20-9a16-abd36ab7fb72
+
+
+# @name edit-user
+PUT {{host}}/users/dce1cf4a-aa2a-4b20-9a16-abd36ab7fb72
+content-type: application/json
+
+
+{
+    "email": "john.23@gmail.com",
+    "name": "John Doe ALTERED"
+}
+
+

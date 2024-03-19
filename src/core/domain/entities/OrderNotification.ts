@@ -5,7 +5,7 @@ import { NotificationStatus } from "../valueObjects/NotificationStatus";
 
 export interface OrderNotificationProps {
   orderId: UniqueEntityId;
-  clientId: UniqueEntityId;
+  userId: UniqueEntityId;
   status: NotificationStatus;
   message: string;
   createdAt: Date;
@@ -30,8 +30,8 @@ export class OrderNotification extends Entity<OrderNotificationProps> {
     return this.props.orderId;
   }
 
-  get clientId() {
-    return this.props.clientId;
+  get userId() {
+    return this.props.userId;
   }
 
   get message() {

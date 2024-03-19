@@ -8,17 +8,17 @@ import { OrderStatus } from "@/core/domain/valueObjects/OrderStatus";
 import { PaymentMethod } from "@/core/domain/valueObjects/PaymentMethod";
 import { faker } from "@faker-js/faker";
 
-import { makeClient } from "./MakeClient";
+import { makeUser } from "./MakeUser";
 
 export function makeOrder(
   override: Partial<OrderProps> = {},
   id?: UniqueEntityId
 ): Order {
-  const client = makeClient();
+  const user = makeUser();
 
   const newOrder = new Order(
     {
-      clientId: new UniqueEntityId(client.id.toString()),
+      userId: new UniqueEntityId(user.id.toString()),
       status: new OrderStatus({ name: OrderStatusEnum.IN_PREPARATION }),
       paymentMethod: new PaymentMethod({ name: PaymentMethodEnum.QR_CODE }),
       totalPrice: faker.number.float(),

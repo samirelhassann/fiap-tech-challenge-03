@@ -1,7 +1,7 @@
 export interface GetOrdersQueueFormatedResponse {
   number: string;
   status: string;
-  clientName: string;
+  userName: string;
 }
 
 export interface GetOrdersQueueFormatedViewModel {

@@ -34,7 +34,7 @@ export class GetOrderByIdPresenter
       id: model.order.id.toString(),
       number: model.order.number.toString(),
       status: model.order.status.name,
-      clientId: model.order.clientId?.toString(),
+      userId: model.order.userId?.toString(),
       visitorName: model.order.visitorName,
       totalPrice: model.order.totalPrice,
       paymentMethod: model.order.paymentMethod.name,
@@ -55,7 +55,10 @@ export class GetOrderByIdPresenter
     };
   }
 
-  sendResponse(res: FastifyReply, response: GetOrderByIdUseCaseResponseDTO) {
+  async sendResponse(
+    res: FastifyReply,
+    response: GetOrderByIdUseCaseResponseDTO
+  ) {
     return res.status(200).send(this.convertToViewModel(response));
   }
 }

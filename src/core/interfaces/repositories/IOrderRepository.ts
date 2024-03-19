@@ -7,14 +7,14 @@ export interface IOrderRepository {
   findMany(
     params: PaginationParams,
     status?: OrderStatus,
-    clientId?: string
+    userId?: string
   ): Promise<PaginationResponse<Order>>;
 
   findManyByStatuses(statuses: OrderStatus[]): Promise<Order[]>;
 
-  findManyByClientId(
+  findManyByUserId(
     params: PaginationParams,
-    clientId: string
+    userId: string
   ): Promise<PaginationResponse<Order>>;
 
   findById(id: string): Promise<Order | null>;

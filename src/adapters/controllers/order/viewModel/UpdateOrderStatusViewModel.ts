@@ -1,7 +1,7 @@
 export interface UpdateOrderStatusViewModel {
   id: string;
   status: string;
-  clientId?: string;
+  userId?: string;
   visitorName?: string;
   paymentMethod: string;
   totalPrice: number;

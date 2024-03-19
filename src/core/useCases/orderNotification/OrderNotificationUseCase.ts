@@ -20,12 +20,12 @@ export class OrderNotificationUseCase implements IOrderNotificationUseCase {
   ) {}
 
   async createOrderNotification({
-    clientId,
+    userId,
     orderId,
     message,
   }: CreateOrderNotificationUseCaseRequestDTO): Promise<CreateOrderNotificationUseCaseResponseDTO> {
     const orderNotification = new OrderNotification({
-      clientId: new UniqueEntityId(clientId),
+      userId: new UniqueEntityId(userId),
       orderId: new UniqueEntityId(orderId),
       status: new NotificationStatus({ name: NotificationStatusEnum.PENDING }),
       message,

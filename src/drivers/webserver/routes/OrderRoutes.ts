@@ -7,6 +7,7 @@ import { getOrdersQueueFormatedDocSchema } from "@/adapters/controllers/order/sc
 import { getOrdersDocSchema } from "@/adapters/controllers/order/schema/GetOrdersSchema";
 import { orderWebHookDocSchema } from "@/adapters/controllers/order/schema/OrderWebHookSchema";
 import { updateOrderStatusDocSchema } from "@/adapters/controllers/order/schema/UpdateOrderStatusSchema";
+import verifyJwt from "@/adapters/middlewares/verifyJwt";
 import { CreateOrderPresenter } from "@/adapters/presenters/order/CreateOrderPresenter";
 import { GetOrderByIdPresenter } from "@/adapters/presenters/order/GetOrderByIdPresenter";
 import { GetOrdersPresenter } from "@/adapters/presenters/order/GetOrdersPresenter";
@@ -15,11 +16,12 @@ import { OrderWebHookPresenter } from "@/adapters/presenters/order/OrderWebHookP
 import { UpdateOrderStatusPresenter } from "@/adapters/presenters/order/UpdateOrderStatusPresenter";
 import {
   makeOrderRepository,
-  makeClientRepository,
+  makeUserRepository,
   makeProductRepository,
   makeComboRepository,
 } from "@/adapters/repositories/PrismaRepositoryFactory";
 import { MercadoPagoService } from "@/adapters/services/mercadoPago/MercadoPagoService";
+import { RoleEnum } from "@/core/domain/enums/RoleEnum";
 import { ComboUseCase } from "@/core/useCases/combo/ComboUseCase";
 import { OrderUseCase } from "@/core/useCases/order/OrderUseCase";
 
@@ -27,7 +29,7 @@ export async function OrderRoutes(app: FastifyInstance) {
   const orderController = new OrderController(
     new OrderUseCase(
       makeOrderRepository(),
-      makeClientRepository(),
+      makeUserRepository(),
       makeProductRepository(),
       makeComboRepository(),
       new MercadoPagoService(),
@@ -65,6 +67,7 @@ export async function OrderRoutes(app: FastifyInstance) {
   app.patch("/:id", {
     schema: updateOrderStatusDocSchema,
     handler: orderController.updateOrderStatus.bind(orderController),
+    onRequest: [verifyJwt(RoleEnum.ADMIN)],
   });
 
   app.post("/webhook", {

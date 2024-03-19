@@ -7,20 +7,20 @@ import { UnsupportedArgumentValueError } from "@/core/domain/base/errors/entitie
 import { MinimumResourcesNotReached } from "@/core/domain/base/errors/useCases/MinimumResourcesNotReached";
 import { ResourceNotFoundError } from "@/core/domain/base/errors/useCases/ResourceNotFoundError";
 import { PaginationResponse } from "@/core/domain/base/PaginationResponse";
-import { Client } from "@/core/domain/entities/Client";
 import { Combo } from "@/core/domain/entities/Combo";
 import { Order } from "@/core/domain/entities/Order";
 import { OrderComboItem } from "@/core/domain/entities/OrderComboItem";
 import { OrderComboItemList } from "@/core/domain/entities/OrderComboItemList";
 import { Product } from "@/core/domain/entities/Product";
+import { User } from "@/core/domain/entities/User";
 import { OrderStatusEnum } from "@/core/domain/enums/OrderStatusEnum";
 import { PaymentMethodEnum } from "@/core/domain/enums/PaymentMethodEnum";
 import { OrderStatus } from "@/core/domain/valueObjects/OrderStatus";
 import { PaymentMethod } from "@/core/domain/valueObjects/PaymentMethod";
-import { IClientRepository } from "@/core/interfaces/repositories/IClientRepository";
 import { IComboRepository } from "@/core/interfaces/repositories/IComboRepository";
 import { IOrderRepository } from "@/core/interfaces/repositories/IOrderRepository";
 import { IProductRepository } from "@/core/interfaces/repositories/IProductRepository";
+import { IUserRepository } from "@/core/interfaces/repositories/IUserRepository";
 import { IPaymentService } from "@/core/interfaces/services/IPaymentService";
 
 import { IComboUseCase } from "../combo/IComboUseCase";
@@ -47,7 +47,7 @@ import { IOrderUseCase } from "./IOrderUseCase";
 export class OrderUseCase implements IOrderUseCase {
   constructor(
     private orderRepository: IOrderRepository,
-    private clientRepository: IClientRepository,
+    private userRepository: IUserRepository,
     private productRepository: IProductRepository,
     private comboRepository: IComboRepository,
 
@@ -81,7 +81,7 @@ export class OrderUseCase implements IOrderUseCase {
   async getOrders({
     params,
     status,
-    clientId,
+    userId,
   }: GetOrdersUseCaseRequestDTO): Promise<GetOrdersUseCaseResponseDTO> {
     if (
       status &&
@@ -92,7 +92,7 @@ export class OrderUseCase implements IOrderUseCase {
       throw new UnsupportedArgumentValueError(OrderStatus.name);
     }
 
-    await this.validateClient(clientId);
+    await this.validateUser(userId);
 
     const orderStatus = status
       ? new OrderStatus({ name: status as OrderStatusEnum })
@@ -101,7 +101,7 @@ export class OrderUseCase implements IOrderUseCase {
     const paginationResponse = await this.orderRepository.findMany(
       params,
       orderStatus,
-      clientId
+      userId
     );
 
     return { paginationResponse };
@@ -172,15 +172,15 @@ export class OrderUseCase implements IOrderUseCase {
   }
 
   async createOrder({
-    clientId,
+    userId,
     visitorName,
     combos,
     paymentMethod,
     paymentDetails,
   }: CreateOrderUseCaseRequestDTO): Promise<CreateOrderUseCaseResponseDTO> {
     this.validatePaymentMethod(paymentMethod);
-    this.validateIfClientOrVisitorNameIsInformed(clientId, visitorName);
-    await this.validateClient(clientId);
+    this.validateIfUserOrVisitorNameIsInformed(userId, visitorName);
+    await this.validateUser(userId);
 
     let allProductIds: string[] = [];
 
@@ -253,7 +253,7 @@ export class OrderUseCase implements IOrderUseCase {
       status: new OrderStatus({
         name: OrderStatusEnum.PENDING_PAYMENT,
       }),
-      clientId: clientId ? new UniqueEntityId(clientId) : undefined,
+      userId: userId ? new UniqueEntityId(userId) : undefined,
       paymentMethod: new PaymentMethod({
         name: paymentMethod as PaymentMethodEnum,
       }),
@@ -305,23 +305,23 @@ export class OrderUseCase implements IOrderUseCase {
     return { order: updatedOrder };
   }
 
-  private async validateClient(clientId: string | undefined) {
-    if (clientId) {
-      const client = await this.clientRepository.findById(clientId);
+  private async validateUser(userId: string | undefined) {
+    if (userId) {
+      const user = await this.userRepository.findById(userId);
 
-      if (!client) {
-        throw new ResourceNotFoundError(Client.name);
+      if (!user) {
+        throw new ResourceNotFoundError(User.name);
       }
     }
   }
 
-  private validateIfClientOrVisitorNameIsInformed(
-    clientId: string | undefined,
+  private validateIfUserOrVisitorNameIsInformed(
+    userId: string | undefined,
     visitorName: string | undefined
   ) {
-    if (!clientId && !visitorName) {
-      throw new MinimumResourcesNotReached(Client.name, [
-        "clientId",
+    if (!userId && !visitorName) {
+      throw new MinimumResourcesNotReached(User.name, [
+        "userId",
         "visitorName",
       ]);
     }

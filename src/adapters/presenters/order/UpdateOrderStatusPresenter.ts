@@ -40,7 +40,7 @@ export class UpdateOrderStatusPresenter
     return {
       id: model.order.id.toString(),
       status: model.order.status.name,
-      clientId: model.order.clientId?.toString(),
+      clientId: model.order.userId?.toString(),
       visitorName: model.order.visitorName,
       paymentMethod: model.order.paymentMethod.name,
       totalPrice: model.order.totalPrice,
@@ -49,7 +49,7 @@ export class UpdateOrderStatusPresenter
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     response: UpdateOrderStatusUseCaseResponseDTO
   ) {

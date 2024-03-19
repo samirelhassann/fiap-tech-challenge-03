@@ -18,7 +18,6 @@ const orderComboSchema = z.object({
 });
 
 export const createOrderPayloadSchema = z.object({
-  clientId: z.string().optional(),
   visitorName: z.string().optional(),
   paymentMethod: z.nativeEnum(PaymentMethodEnum),
   paymentStatus: z.nativeEnum(PaymentStatusEnum),
@@ -32,7 +31,6 @@ export const createOrderDocSchema = {
   body: {
     type: "object",
     properties: {
-      clientId: { type: "string" },
       visitorName: {
         type: "string",
         description:

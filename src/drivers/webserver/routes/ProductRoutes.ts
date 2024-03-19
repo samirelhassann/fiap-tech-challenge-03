@@ -6,12 +6,14 @@ import { editProductDocSchema } from "@/adapters/controllers/product/schema/Edit
 import { getProductByIdDocSchema } from "@/adapters/controllers/product/schema/GetProductByIdSchema";
 import { getProductsDocSchema } from "@/adapters/controllers/product/schema/GetProductsSchema";
 import { inactiveProductDocSchema } from "@/adapters/controllers/product/schema/InactiveProducSchema";
+import verifyJwt from "@/adapters/middlewares/verifyJwt";
 import { CreateProductPresenter } from "@/adapters/presenters/product/CreateProductPresenter";
 import { EditProductPresenter } from "@/adapters/presenters/product/EditProductPresenter";
 import { GetProductByIdPresenter } from "@/adapters/presenters/product/GetProductByIdPresenter";
 import { GetProductsPresenter } from "@/adapters/presenters/product/GetProductsPresenter";
 import { InactivateProductPresenter } from "@/adapters/presenters/product/InactivateProductPresenter";
 import { makeProductRepository } from "@/adapters/repositories/PrismaRepositoryFactory";
+import { RoleEnum } from "@/core/domain/enums/RoleEnum";
 import { ProductUseCase } from "@/core/useCases/product/ProductUseCase";
 
 export async function ProductRoutes(app: FastifyInstance) {
@@ -29,20 +31,27 @@ export async function ProductRoutes(app: FastifyInstance) {
     schema: getProductsDocSchema,
     handler: productController.getProducts.bind(productController),
   });
+
   app.get("/:id", {
     schema: getProductByIdDocSchema,
     handler: productController.getProductById.bind(productController),
   });
+
   app.post("", {
     schema: createProductDocSchema,
     handler: productController.createProduct.bind(productController),
+    onRequest: [verifyJwt(RoleEnum.ADMIN)],
   });
+
   app.put("/:id", {
     schema: editProductDocSchema,
     handler: productController.editProduct.bind(productController),
+    onRequest: [verifyJwt(RoleEnum.ADMIN)],
   });
+
   app.delete("/:id", {
     schema: inactiveProductDocSchema,
     handler: productController.inactivateProduct.bind(productController),
+    onRequest: [verifyJwt(RoleEnum.ADMIN)],
   });
 }

@@ -10,7 +10,7 @@ export const getOrdersQueryParamsSchema = z.object({
   page: z.coerce.number().default(1),
   pageSize: z.coerce.number().default(20),
   status: z.string().optional(),
-  clientId: z.string().optional(),
+  userId: z.string().optional(),
 });
 
 const responseExample: GetOrdersViewModel = {
@@ -19,7 +19,7 @@ const responseExample: GetOrdersViewModel = {
       id: "123",
       number: "1",
       status: "pending",
-      clientId: "123",
+      userId: "123",
       visitorName: "John Doe",
       paymentMethod: "QR_CODE",
       paymentDetails: "123",
@@ -45,7 +45,7 @@ export const getOrdersDocSchema = {
       page: { type: "number" },
       pageSize: { type: "number" },
       status: { type: "string", enum: Object.values(OrderStatusEnum) },
-      clientId: { type: "string" },
+      userId: { type: "string" },
     },
   },
   response: {

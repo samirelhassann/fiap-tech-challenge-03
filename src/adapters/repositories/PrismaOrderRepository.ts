@@ -15,11 +15,11 @@ export class PrismaOrderRepository implements IOrderRepository {
   async findMany(
     { page, size }: PaginationParams,
     status?: OrderStatus,
-    clientId?: string
+    userId?: string
   ): Promise<PaginationResponse<Order>> {
     const where = {
       status: status ? status.name : undefined,
-      client_id: clientId,
+      user_id: userId,
     };
 
     const totalItems = await prisma.order.count({
@@ -56,20 +56,20 @@ export class PrismaOrderRepository implements IOrderRepository {
       .then((data) => data.map((c) => PrismaOrderToDomainConverter.convert(c)));
   }
 
-  async findManyByClientId(
+  async findManyByUserId(
     { page, size }: PaginationParams,
-    clientId: string
+    userId: string
   ): Promise<PaginationResponse<Order>> {
     const totalItems = await prisma.order.count({
       where: {
-        client_id: clientId,
+        user_id: userId,
       },
     });
     const totalPages = Math.ceil(totalItems / size);
 
     const data = await prisma.order.findMany({
       where: {
-        client_id: clientId,
+        user_id: userId,
       },
       skip: (page - 1) * size,
       take: size,
@@ -108,7 +108,7 @@ export class PrismaOrderRepository implements IOrderRepository {
           status: order.status.name,
           payment_method: order.paymentMethod.name,
           payment_details: order.paymentDetails,
-          client_id: order.clientId?.toString(),
+          user_id: order.userId?.toString(),
           visitor_name: order.visitorName,
           total_price: order.totalPrice,
           created_at: order.createdAt,

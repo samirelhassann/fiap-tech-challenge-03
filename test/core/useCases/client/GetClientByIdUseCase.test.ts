@@ -2,32 +2,32 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { UniqueEntityId } from "@/core/domain/base/entities/UniqueEntityId";
 import { ResourceNotFoundError } from "@/core/domain/base/errors/useCases/ResourceNotFoundError";
-import { ClientUseCase } from "@/core/useCases/client/ClientUseCase";
-import { makeClient } from "@test/adapters/factories/MakeClient";
-import { InMemoryClientRepository } from "@test/adapters/InMemoryClientRepository";
+import { UserUseCase } from "@/core/useCases/user/UserUseCase";
+import { makeUser } from "@test/adapters/factories/MakeUser";
+import { InMemoryUserRepository } from "@test/adapters/InMemoryUserRepository";
 
-let inMemoryClientsRepository: InMemoryClientRepository;
-let sut: ClientUseCase;
+let inMemoryUsersRepository: InMemoryUserRepository;
+let sut: UserUseCase;
 
-describe("Given the Get Clients By Id Use Case", () => {
+describe("Given the Get Users By Id Use Case", () => {
   const id = "123";
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    inMemoryClientsRepository = new InMemoryClientRepository();
+    inMemoryUsersRepository = new InMemoryUserRepository();
 
-    sut = new ClientUseCase(inMemoryClientsRepository);
+    sut = new UserUseCase(inMemoryUsersRepository);
   });
 
-  it("should return the client correctly", async () => {
-    const client = makeClient({}, new UniqueEntityId(id));
+  it("should return the user correctly", async () => {
+    const user = makeUser({}, new UniqueEntityId(id));
 
-    inMemoryClientsRepository.items.push(client);
+    inMemoryUsersRepository.items.push(user);
 
-    const { client: foundedClient } = await sut.getClientById({ id });
+    const { user: foundedUser } = await sut.getUserById({ id });
 
-    expect(foundedClient).toEqual(
+    expect(foundedUser).toEqual(
       expect.objectContaining({
         id: new UniqueEntityId(id),
       })
@@ -35,11 +35,11 @@ describe("Given the Get Clients By Id Use Case", () => {
   });
 
   it("should throw an error when the informed id does not exist", async () => {
-    const client = makeClient({}, new UniqueEntityId(id));
+    const user = makeUser({}, new UniqueEntityId(id));
 
-    inMemoryClientsRepository.items.push(client);
+    inMemoryUsersRepository.items.push(user);
 
-    await expect(() => sut.getClientById({ id: "456" })).rejects.toBeInstanceOf(
+    await expect(() => sut.getUserById({ id: "456" })).rejects.toBeInstanceOf(
       ResourceNotFoundError
     );
   });

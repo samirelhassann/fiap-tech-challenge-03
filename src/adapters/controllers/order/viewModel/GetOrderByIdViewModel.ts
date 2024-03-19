@@ -1,7 +1,7 @@
 export interface GetOrderByIdViewModel {
   id: string;
   number: string;
-  clientId?: string;
+  userId?: string;
   status: string;
   totalPrice: number;
   paymentMethod: string;

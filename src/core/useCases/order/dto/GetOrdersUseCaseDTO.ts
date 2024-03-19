@@ -5,7 +5,7 @@ import { Order } from "@/core/domain/entities/Order";
 export interface GetOrdersUseCaseRequestDTO {
   params: PaginationParams;
   status?: string;
-  clientId?: string;
+  userId?: string;
 }
 
 export interface GetOrdersUseCaseResponseDTO {

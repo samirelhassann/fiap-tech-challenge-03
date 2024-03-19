@@ -2,37 +2,37 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AttributeConflictError } from "@/core/domain/base/errors/useCases/AttributeConflictError";
 import { ResourceNotFoundError } from "@/core/domain/base/errors/useCases/ResourceNotFoundError";
-import { ClientUseCase } from "@/core/useCases/client/ClientUseCase";
-import { makeClient } from "@test/adapters/factories/MakeClient";
-import { InMemoryClientRepository } from "@test/adapters/InMemoryClientRepository";
+import { UserUseCase } from "@/core/useCases/user/UserUseCase";
+import { makeUser } from "@test/adapters/factories/MakeUser";
+import { InMemoryUserRepository } from "@test/adapters/InMemoryUserRepository";
 
-let inMemoryClientsRepository: InMemoryClientRepository;
-let sut: ClientUseCase;
+let inMemoryUsersRepository: InMemoryUserRepository;
+let sut: UserUseCase;
 
-describe("Given the Edit Client Use Case", () => {
+describe("Given the Edit User Use Case", () => {
   const name = "updated name";
   const email = "updated email";
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    inMemoryClientsRepository = new InMemoryClientRepository();
+    inMemoryUsersRepository = new InMemoryUserRepository();
 
-    sut = new ClientUseCase(inMemoryClientsRepository);
+    sut = new UserUseCase(inMemoryUsersRepository);
   });
 
-  it("should edit the client correctly", async () => {
-    const createdClient = makeClient();
+  it("should edit the user correctly", async () => {
+    const createdUser = makeUser();
 
-    inMemoryClientsRepository.items.push(createdClient);
+    inMemoryUsersRepository.items.push(createdUser);
 
-    await sut.editClient({
-      id: createdClient.id.toString(),
+    await sut.editUser({
+      id: createdUser.id.toString(),
       name,
       email,
     });
 
-    expect(inMemoryClientsRepository.items[0]).toEqual(
+    expect(inMemoryUsersRepository.items[0]).toEqual(
       expect.objectContaining({
         email,
         name,
@@ -41,30 +41,30 @@ describe("Given the Edit Client Use Case", () => {
   });
 
   it("should throw an error when the informed 'email' already exists", async () => {
-    const createdClient = makeClient({});
-    const createdClient2 = makeClient({
+    const createdUser = makeUser({});
+    const createdUser2 = makeUser({
       email: "email@email.com",
     });
 
-    inMemoryClientsRepository.items.push(createdClient);
-    inMemoryClientsRepository.items.push(createdClient2);
+    inMemoryUsersRepository.items.push(createdUser);
+    inMemoryUsersRepository.items.push(createdUser2);
 
     await expect(() =>
-      sut.editClient({
-        id: createdClient.id.toString(),
+      sut.editUser({
+        id: createdUser.id.toString(),
         name,
         email: "email@email.com",
       })
     ).rejects.toBeInstanceOf(AttributeConflictError);
   });
 
-  it("should throw an error when client does not exist", async () => {
-    const createdClient = makeClient({});
+  it("should throw an error when user does not exist", async () => {
+    const createdUser = makeUser({});
 
-    inMemoryClientsRepository.items.push(createdClient);
+    inMemoryUsersRepository.items.push(createdUser);
 
     await expect(() =>
-      sut.editClient({
+      sut.editUser({
         id: "123",
         name,
         email,

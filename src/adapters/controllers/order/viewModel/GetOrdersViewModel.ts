@@ -2,7 +2,7 @@ export interface GetOrdersResponse {
   id: string;
   number: string;
   status: string;
-  clientId?: string;
+  userId?: string;
   visitorName?: string;
   paymentMethod: string;
   paymentDetails?: string;

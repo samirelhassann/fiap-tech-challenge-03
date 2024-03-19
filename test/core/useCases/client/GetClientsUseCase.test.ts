@@ -1,50 +1,50 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PaginationParams } from "@/core/domain/base/PaginationParams";
-import { ClientUseCase } from "@/core/useCases/client/ClientUseCase";
-import { makeClient } from "@test/adapters/factories/MakeClient";
-import { InMemoryClientRepository } from "@test/adapters/InMemoryClientRepository";
+import { UserUseCase } from "@/core/useCases/user/UserUseCase";
+import { makeUser } from "@test/adapters/factories/MakeUser";
+import { InMemoryUserRepository } from "@test/adapters/InMemoryUserRepository";
 
-let inMemoryClientsRepository: InMemoryClientRepository;
-let sut: ClientUseCase;
+let inMemoryUsersRepository: InMemoryUserRepository;
+let sut: UserUseCase;
 
-describe("Given the Get Clients Use Case", () => {
+describe("Given the Get Users Use Case", () => {
   const page = 1;
   const size = 10;
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    inMemoryClientsRepository = new InMemoryClientRepository();
+    inMemoryUsersRepository = new InMemoryUserRepository();
 
-    sut = new ClientUseCase(inMemoryClientsRepository);
+    sut = new UserUseCase(inMemoryUsersRepository);
   });
 
-  it("should return the clients correctly", async () => {
+  it("should return the users correctly", async () => {
     const params = new PaginationParams(page, size);
 
-    const clientToCreate = makeClient();
+    const userToCreate = makeUser();
 
-    inMemoryClientsRepository.items.push(clientToCreate);
+    inMemoryUsersRepository.items.push(userToCreate);
 
-    const { paginationResponse } = await sut.getClients({ params });
+    const { paginationResponse } = await sut.getUsers({ params });
 
-    const clients = paginationResponse.data;
+    const users = paginationResponse.data;
 
-    expect(clients).toHaveLength(1);
+    expect(users).toHaveLength(1);
   });
 
-  it("should return the clients from the second pagination correctly", async () => {
+  it("should return the users from the second pagination correctly", async () => {
     const params = new PaginationParams(2, size);
 
     Array.from({ length: 12 }).forEach(() => {
-      inMemoryClientsRepository.items.push(makeClient());
+      inMemoryUsersRepository.items.push(makeUser());
     });
 
-    const { paginationResponse } = await sut.getClients({ params });
+    const { paginationResponse } = await sut.getUsers({ params });
 
-    const clients = paginationResponse.data;
+    const users = paginationResponse.data;
 
-    expect(clients).toHaveLength(2);
+    expect(users).toHaveLength(2);
   });
 });

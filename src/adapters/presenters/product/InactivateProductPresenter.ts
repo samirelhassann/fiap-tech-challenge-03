@@ -42,7 +42,7 @@ export class InactivateProductPresenter
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     useCaseResponseModel: InactiveProductUseCaseResponseDTO
   ) {

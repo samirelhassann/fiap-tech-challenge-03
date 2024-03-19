@@ -22,12 +22,12 @@ export class InMemoryOrderRepository implements IOrderRepository {
   async findMany(
     { page, size }: PaginationParams,
     status?: OrderStatus,
-    clientId?: string
+    userId?: string
   ): Promise<PaginationResponse<Order>> {
     const filteredItems = this.items.filter(
       (p) =>
         (status ? p.status === status : true) &&
-        (clientId ? p.clientId?.toString() === clientId : true)
+        (userId ? p.userId?.toString() === userId : true)
     );
 
     const totalItems = filteredItems.length;
@@ -44,12 +44,12 @@ export class InMemoryOrderRepository implements IOrderRepository {
     });
   }
 
-  async findManyByClientId(
+  async findManyByUserId(
     params: PaginationParams,
-    clientId: string
+    userId: string
   ): Promise<PaginationResponse<Order>> {
     const filteredItems = this.items.filter(
-      (order) => order.clientId?.toString() === clientId
+      (order) => order.userId?.toString() === userId
     );
 
     const totalItems = filteredItems.length;

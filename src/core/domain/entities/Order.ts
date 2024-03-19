@@ -6,21 +6,21 @@ import { Optional } from "../base/types/Optional";
 import { UpdatedOrderStatusEvent } from "../events/UpdatedOrderStatusEvent";
 import { OrderStatus } from "../valueObjects/OrderStatus";
 import { PaymentMethod } from "../valueObjects/PaymentMethod";
-import { Client } from "./Client";
 import { OrderComboItemList } from "./OrderComboItemList";
+import { User } from "./User";
 
 export interface OrderProps {
   status: OrderStatus;
   number: bigint;
   totalPrice: number;
   createdAt: Date;
-  clientId?: UniqueEntityId;
+  userId?: UniqueEntityId;
   visitorName?: string;
   updatedAt?: Date;
   paymentMethod: PaymentMethod;
   paymentDetails?: string;
   combos: OrderComboItemList;
-  client?: Client;
+  user?: User;
 }
 
 export class Order extends AggregateRoot<OrderProps> {
@@ -65,8 +65,8 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.totalPrice;
   }
 
-  get clientId() {
-    return this.props.clientId;
+  get userId() {
+    return this.props.userId;
   }
 
   get visitorName() {
@@ -103,8 +103,8 @@ export class Order extends AggregateRoot<OrderProps> {
     this.touch();
   }
 
-  get client() {
-    return this.props.client;
+  get user() {
+    return this.props.user;
   }
 
   private touch() {

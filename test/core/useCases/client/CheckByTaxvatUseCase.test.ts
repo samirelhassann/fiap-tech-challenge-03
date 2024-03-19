@@ -1,35 +1,35 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ClientUseCase } from "@/core/useCases/client/ClientUseCase";
-import { makeClient } from "@test/adapters/factories/MakeClient";
-import { InMemoryClientRepository } from "@test/adapters/InMemoryClientRepository";
+import { UserUseCase } from "@/core/useCases/user/UserUseCase";
+import { makeUser } from "@test/adapters/factories/MakeUser";
+import { InMemoryUserRepository } from "@test/adapters/InMemoryUserRepository";
 
-let inMemoryClientsRepository: InMemoryClientRepository;
-let sut: ClientUseCase;
+let inMemoryUsersRepository: InMemoryUserRepository;
+let sut: UserUseCase;
 
 describe("Given the Check By Taxvat Use Case", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    inMemoryClientsRepository = new InMemoryClientRepository();
+    inMemoryUsersRepository = new InMemoryUserRepository();
 
-    sut = new ClientUseCase(inMemoryClientsRepository);
+    sut = new UserUseCase(inMemoryUsersRepository);
   });
 
   it("should check the taxvat correctly", async () => {
-    const clientToCreate = makeClient();
-    inMemoryClientsRepository.items.push(clientToCreate);
+    const userToCreate = makeUser();
+    inMemoryUsersRepository.items.push(userToCreate);
 
-    const taxvat = clientToCreate.taxVat.number;
+    const taxvat = userToCreate.taxVat.number;
 
     const { exist } = await sut.checkByTaxvat({ taxvat });
 
     expect(exist).toBe(true);
   });
 
-  it("should return correctly when there is no client with the requested taxvat", async () => {
-    const clientToCreate = makeClient();
-    inMemoryClientsRepository.items.push(clientToCreate);
+  it("should return correctly when there is no user with the requested taxvat", async () => {
+    const userToCreate = makeUser();
+    inMemoryUsersRepository.items.push(userToCreate);
 
     const taxvat = "123";
 

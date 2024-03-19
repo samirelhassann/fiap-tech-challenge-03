@@ -42,7 +42,7 @@ export class GetProductByIdPresenter
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     useCaseResponseModel: GetProductByIdUseCaseResponseDTO
   ) {

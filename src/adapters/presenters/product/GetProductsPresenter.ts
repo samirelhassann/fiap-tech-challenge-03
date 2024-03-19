@@ -48,7 +48,10 @@ export class GetProductsPresenter
     }));
   }
 
-  sendResponse(res: FastifyReply, response: GetProductsUseCaseResponseDTO) {
+  async sendResponse(
+    res: FastifyReply,
+    response: GetProductsUseCaseResponseDTO
+  ) {
     return res.status(200).send(this.convertToViewModel(response));
   }
 }

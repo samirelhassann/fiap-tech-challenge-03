@@ -12,7 +12,7 @@ export interface IControllerPresenter<
   sendResponse(
     res: FastifyReply,
     useCaseResponseModel: UseCaseResponseDTO
-  ): FastifyReply;
+  ): Promise<FastifyReply>;
 
   convertErrorResponse(error: Error, res: FastifyReply): FastifyReply;
 }

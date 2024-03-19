@@ -10,21 +10,12 @@ async function clearDatabase() {
   await prisma.orderComboItem.deleteMany();
   await prisma.orderProductItem.deleteMany();
   await prisma.order.deleteMany();
-  await prisma.client.deleteMany();
   await prisma.comboProduct.deleteMany();
   await prisma.product.deleteMany();
   await prisma.combo.deleteMany();
 }
 
 async function seedDatabase() {
-  await prisma.client.create({
-    data: {
-      name: "John Doe",
-      tax_vat: "1234567890",
-      email: "john@example.com",
-    },
-  });
-
   await prisma.product.createMany({
     data: [
       {
@@ -110,47 +101,6 @@ async function seedDatabase() {
         category: "DRINK",
       },
     ],
-  });
-
-  const sandwich = await prisma.product.findFirst({
-    where: {
-      name: "Burger",
-    },
-  });
-
-  const side = await prisma.product.findFirst({
-    where: {
-      name: "Fries",
-    },
-  });
-
-  const drink = await prisma.product.findFirst({
-    where: {
-      name: "Water",
-    },
-  });
-
-  const combo = await prisma.combo.create({
-    data: {
-      name: "Burger Combo",
-      description: "Burger with fries and drink",
-      price: 10.1,
-      comboProducts: {
-        createMany: {
-          data: [
-            {
-              product_id: sandwich!.id,
-            },
-            {
-              product_id: side!.id,
-            },
-            {
-              product_id: drink!.id,
-            },
-          ],
-        },
-      },
-    },
   });
 }
 

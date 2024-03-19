@@ -23,12 +23,15 @@ export class CreateOrderPresenter
   convertToUseCaseDTO(req: FastifyRequest): CreateOrderUseCaseRequestDTO {
     const parsedRequest = createOrderPayloadSchema.parse(req.body);
 
+    const userId = req.isAnonymous ? undefined : req.userId;
+
     return {
       ...parsedRequest,
+      userId,
     };
   }
 
-  sendResponse(
+  async sendResponse(
     res: FastifyReply,
     _useCaseResponseModel: CreateOrderUseCaseResponseDTO
   ) {
@@ -38,7 +41,7 @@ export class CreateOrderPresenter
   convertErrorResponse(error: Error, res: FastifyReply): FastifyReply {
     if (error instanceof MinimumResourcesNotReached) {
       return res.status(400).send({
-        message: `Please inform the clientId or the visitorName`,
+        message: `For unauthorized requests, the visitorName field is required`,
       });
     }
 
