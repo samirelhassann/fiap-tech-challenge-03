@@ -116,6 +116,7 @@ jobs:
           sed -i 's|MERCADO_PAGO_BEARER_TOKEN: ""|MERCADO_PAGO_BEARER_TOKEN: "${{ secrets.MERCADO_PAGO_BEARER_TOKEN }}"|' ./deploy/configmap-api.yaml
           sed -i 's|MERCADO_PAGO_USER_ID: ""|MERCADO_PAGO_USER_ID: "${{ secrets.MERCADO_PAGO_USER_ID }}"|' ./deploy/configmap-api.yaml
           sed -i 's|MERCADO_PAGO_EXTERNAL_POS_ID: ""|MERCADO_PAGO_EXTERNAL_POS_ID: "${{ secrets.MERCADO_PAGO_EXTERNAL_POS_ID }}"|' ./deploy/configmap-api.yaml
+          sed -i 's|JWT_SECRET: ""|JWT_SECRET: "${{ secrets.JWT_SECRET }}"|' ./deploy/configmap-api.yaml
         env:
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
       - name: Deploy to Kubernetes

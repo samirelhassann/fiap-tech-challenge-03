@@ -1,7 +1,5 @@
 # FIAP SOAT - Grupo 65 - Tech Challenge #03 - Application
 
-## Contexto
-
 Repositório do Tech Challenge #03 da FIAP/Alura, no curso SOAT3. 
 
 Este projeto é uma evolução do projeto do Tech Challenge #02. Nele foi realizado as seguintes implementações: 
